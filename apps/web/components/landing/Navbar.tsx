@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -63,18 +64,18 @@ export default function Navbar() {
 
           {/* CTA buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <a
-              href="#"
+            <Link
+              href="/signin"
               className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors px-3 py-2 focus-ring rounded-lg"
             >
               Sign in
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/signup"
               className="text-sm font-medium bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white px-4 py-2 rounded-lg transition-all duration-200 focus-ring hover:shadow-[0_0_20px_var(--accent-glow-strong)]"
             >
               Get Started
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu toggle */}
@@ -111,18 +112,20 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="border-t border-[var(--border)] pt-4 mt-2 flex flex-col gap-2">
-                <a
-                  href="#"
+                <Link
+                  href="/signin"
+                  onClick={() => setMenuOpen(false)}
                   className="px-4 py-3 rounded-lg text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] transition-all"
                 >
                   Sign in
-                </a>
-                <a
-                  href="#"
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setMenuOpen(false)}
                   className="px-4 py-3 rounded-lg text-sm font-medium bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white transition-all text-center"
                 >
                   Get Started
-                </a>
+                </Link>
               </div>
             </div>
           </motion.div>

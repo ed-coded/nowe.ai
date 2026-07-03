@@ -1,0 +1,4 @@
+# AI coding tool artifacts (local tooling config, not application code)
+.agents/
+.claude/
+skills-lock.json

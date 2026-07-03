@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Search, ArrowRight, Building, ClipboardCheck, Star, Zap } from "lucide-react";
 
@@ -87,13 +88,13 @@ export default function AgentCTASection() {
                 ))}
               </ul>
 
-              <a
-                href="#"
+              <Link
+                href="/signup"
                 className="inline-flex items-center gap-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium text-sm px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-[0_0_28px_var(--accent-glow-strong)] focus-ring"
               >
                 Start searching
                 <ArrowRight size={16} />
-              </a>
+              </Link>
             </div>
           </motion.div>
 
@@ -135,13 +136,13 @@ export default function AgentCTASection() {
                 ))}
               </ul>
 
-              <a
-                href="#"
+              <Link
+                href="/signup"
                 className="inline-flex items-center gap-2.5 border border-[var(--border)] hover:border-[var(--accent)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-medium text-sm px-7 py-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface)] focus-ring"
               >
                 Apply as agent
                 <ArrowRight size={16} />
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>

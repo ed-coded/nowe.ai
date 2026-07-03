@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Home, Twitter, Linkedin, Instagram } from "lucide-react";
 
 const footerLinks = {
@@ -14,10 +15,10 @@ const footerLinks = {
     { label: "Press", href: "#" },
   ],
   Agents: [
-    { label: "List a Property", href: "#" },
+    { label: "List a Property", href: "/signup" },
     { label: "Agent Verification", href: "#" },
     { label: "Agent Dashboard", href: "#" },
-    { label: "Apply Now", href: "#" },
+    { label: "Apply Now", href: "/signup" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "#" },
@@ -75,12 +76,12 @@ export default function Footer() {
               <ul className="space-y-3">
                 {links.map(({ label, href }) => (
                   <li key={label}>
-                    <a
+                    <Link
                       href={href}
                       className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors focus-ring rounded"
                     >
                       {label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

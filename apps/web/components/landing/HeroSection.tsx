@@ -74,7 +74,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden dot-grid">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden dot-grid pt-16">
       {/* Gradient blobs */}
       <AnimatedGradientBlob className="w-[600px] h-[600px] -top-40 -left-60 bg-[var(--accent)] opacity-10" />
       <AnimatedGradientBlob className="w-[500px] h-[500px] top-20 -right-60 bg-purple-500 opacity-8" />
