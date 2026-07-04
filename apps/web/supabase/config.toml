@@ -236,12 +236,18 @@ otp_expiry = 3600
 # Use a production-ready SMTP server
 # [auth.email.smtp]
 # enabled = true
-# host = "smtp.sendgrid.net"
+# host = "smtp.sendgrid.net"       # replace with your provider (e.g. Resend, Postmark, SES)
 # port = 587
 # user = "apikey"
 # pass = "env(SENDGRID_API_KEY)"
-# admin_email = "admin@email.com"
-# sender_name = "Admin"
+# admin_email = "noreply@nowe.ai"   # recommended From address — requires domain verification with your SMTP provider
+# sender_name = "nowe.ai"           # recommended From name
+
+# Branded "Confirm signup" email — this is the only auth email flow currently
+# used by the app (see app/signup/page.tsx -> app/auth/confirm/route.ts).
+[auth.email.template.confirmation]
+subject = "Confirm your nowe.ai account"
+content_path = "./supabase/templates/confirmation.html"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]

@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Home, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { brand } from "@/lib/branding";
 
 const navLinks = [
   { label: "How It Works", href: "#how-it-works" },
@@ -38,13 +40,19 @@ export default function Navbar() {
           <a
             href="/"
             className="flex items-center gap-2 group focus-ring"
-            aria-label="Home"
+            aria-label={brand.name}
           >
-            <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center group-hover:bg-[var(--accent-hover)] transition-colors">
-              <Home size={16} className="text-white" />
+            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center overflow-hidden">
+              <Image
+                src={brand.logo.icon}
+                alt={brand.logo.alt}
+                width={32}
+                height={32}
+                className="w-full h-full object-contain p-0.5"
+              />
             </div>
             <span className="font-semibold text-[var(--text-primary)] text-lg tracking-tight">
-              home
+              {brand.name}
             </span>
           </a>
 

@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
-  Home,
   Mail,
   Lock,
   Eye,
@@ -14,6 +14,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
+import { brand } from "@/lib/branding";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -70,11 +71,17 @@ export default function SignInPage() {
 
         <div className="glass rounded-2xl border border-[var(--border)] p-8">
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[var(--accent)] flex items-center justify-center">
-              <Home size={18} className="text-white" />
+            <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center overflow-hidden">
+              <Image
+                src={brand.logo.icon}
+                alt={brand.logo.alt}
+                width={36}
+                height={36}
+                className="w-full h-full object-contain p-0.5"
+              />
             </div>
             <span className="font-semibold text-[var(--text-primary)] text-lg tracking-tight">
-              home
+              {brand.name}
             </span>
           </div>
 

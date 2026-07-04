@@ -1,6 +1,7 @@
 {
   "name": "web",
   "version": "0.1.0",
+  "description": "nowe.ai — AI-powered property discovery platform for Ghana",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

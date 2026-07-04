@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { Home, Twitter, Linkedin, Instagram } from "lucide-react";
+import Image from "next/image";
+import { Twitter, Linkedin, Instagram } from "lucide-react";
+import { brand } from "@/lib/branding";
 
 const footerLinks = {
   Product: [
@@ -28,9 +30,9 @@ const footerLinks = {
 };
 
 const socials = [
-  { icon: Twitter, label: "Twitter", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Instagram, label: "Instagram", href: "#" },
+  { icon: Twitter, label: "Twitter", href: brand.social.twitter },
+  { icon: Linkedin, label: "LinkedIn", href: brand.social.linkedin },
+  { icon: Instagram, label: "Instagram", href: brand.social.instagram },
 ];
 
 export default function Footer() {
@@ -40,12 +42,18 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-10 mb-14">
           {/* Brand column */}
           <div className="col-span-2">
-            <a href="/" className="flex items-center gap-2 mb-4 group" aria-label="Home">
-              <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center group-hover:bg-[var(--accent-hover)] transition-colors">
-                <Home size={16} className="text-white" />
+            <a href="/" className="flex items-center gap-2 mb-4 group" aria-label={brand.name}>
+              <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center overflow-hidden">
+                <Image
+                  src={brand.logo.icon}
+                  alt={brand.logo.alt}
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain p-0.5"
+                />
               </div>
               <span className="font-semibold text-[var(--text-primary)] text-lg tracking-tight">
-                home
+                {brand.name}
               </span>
             </a>
             <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6 max-w-xs">
@@ -92,7 +100,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-[var(--border)] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[var(--text-faint)]">
-            © 2026 Home Technologies Ltd. All rights reserved. Built in 🇬🇭 Ghana.
+            {brand.copyright}
           </p>
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-[var(--success)] animate-pulse" />

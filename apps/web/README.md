@@ -1,6 +1,6 @@
-# Home — Web App
+# nowe.ai — Web App
 
-Next.js (App Router) frontend for Home, an AI-powered property discovery platform for Ghana. Handles the marketing site plus Supabase-backed authentication (sign up, sign in, email confirmation).
+Next.js (App Router) frontend for nowe.ai, an AI-powered property discovery platform for Ghana. Handles the marketing site plus Supabase-backed authentication (sign up, sign in, email confirmation).
 
 ## Prerequisites
 
@@ -88,6 +88,7 @@ apps/web/
 ├── components/landing/     # Marketing/landing page sections
 ├── lib/
 │   ├── env.ts              # Validated environment variables (single source of truth)
+│   ├── branding.ts         # Brand identity — name, copy, contact/sender info (single source of truth)
 │   └── utils.ts            # Shared helpers (e.g. `cn`)
 ├── utils/supabase/
 │   ├── client.ts           # Browser Supabase client
