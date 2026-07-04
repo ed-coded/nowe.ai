@@ -18,6 +18,7 @@ jobs:
     env:
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+      ADMIN_ACCESS_PASSPHRASE: ${{ secrets.ADMIN_ACCESS_PASSPHRASE }}
 
     steps:
       - name: Checkout repository
