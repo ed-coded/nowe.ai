@@ -38,10 +38,23 @@ export default function HeroSection() {
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [displayedPlaceholder, setDisplayedPlaceholder] = useState("");
+  const [typedForIdx, setTypedForIdx] = useState(placeholderIdx);
 
   const rotatePlaceholder = useCallback(() => {
     setPlaceholderIdx((prev) => (prev + 1) % placeholders.length);
   }, []);
+
+  // Reset the typed text the moment placeholderIdx changes, computed during
+  // render rather than in the effect below — React's documented pattern
+  // for "adjusting state when a prop changes"
+  // (https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes).
+  // React re-runs the component immediately when this fires, before the
+  // browser paints, so the reset is visually instantaneous — identical
+  // timing to the previous effect-based reset.
+  if (placeholderIdx !== typedForIdx) {
+    setTypedForIdx(placeholderIdx);
+    setDisplayedPlaceholder("");
+  }
 
   useEffect(() => {
     if (isTyping) return;
@@ -52,7 +65,6 @@ export default function HeroSection() {
   useEffect(() => {
     const target = placeholders[placeholderIdx];
     let i = 0;
-    setDisplayedPlaceholder("");
 
     const typeTimeout = setTimeout(() => {
       const typeInterval = setInterval(() => {
