@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 @layer base {
   :root {
@@ -28,6 +32,35 @@
     --radius-xl: 24px;
 
     --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+    /* shadcn/ui compatibility tokens — mapped onto the palette above so
+       shadcn components render with the existing brand colors instead of
+       shadcn's generic defaults. Do not add a --radius base variable here:
+       Tailwind's built-in default radius scale (rounded-md, rounded-2xl,
+       etc.) is already used across the app and must stay untouched. */
+    --foreground: var(--text-primary);
+    --card-foreground: var(--text-primary);
+    --popover: var(--card);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--accent);
+    --primary-foreground: #ffffff;
+    --secondary: var(--surface);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--surface);
+    --muted-foreground: var(--text-muted);
+    --accent-foreground: #ffffff;
+    --destructive: #fb7185;
+    --input: var(--border);
+    --ring: var(--accent);
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
@@ -205,4 +238,27 @@
     outline-offset: 2px;
     border-radius: var(--radius-sm);
   }
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
 }

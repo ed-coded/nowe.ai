@@ -1,8 +1,15 @@
 import { createServerClient } from "@supabase/ssr";
+import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { type NextRequest, NextResponse } from "next/server";
 import { env } from "@/lib/env";
 
-export const updateSession = async (request: NextRequest) => {
+export const updateSession = async (
+  request: NextRequest
+): Promise<{
+  response: NextResponse;
+  user: User | null;
+  supabase: SupabaseClient;
+}> => {
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -34,7 +41,9 @@ export const updateSession = async (request: NextRequest) => {
   // Supabase and triggers the cookie refresh via setAll() above. Skipping
   // this call means the middleware client never touches auth and sessions
   // silently stop refreshing.
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return supabaseResponse;
+  return { response: supabaseResponse, user, supabase };
 };
