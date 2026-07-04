@@ -42,7 +42,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-10 mb-14">
           {/* Brand column */}
           <div className="col-span-2">
-            <a href="/" className="flex items-center gap-2 mb-4 group" aria-label={brand.name}>
+            <Link href="/" className="flex items-center gap-2 mb-4 group" aria-label={brand.name}>
               <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center overflow-hidden">
                 <Image
                   src={brand.logo.icon}
@@ -55,7 +55,7 @@ export default function Footer() {
               <span className="font-semibold text-[var(--text-primary)] text-lg tracking-tight">
                 {brand.name}
               </span>
-            </a>
+            </Link>
             <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6 max-w-xs">
               The housing intelligence layer for Africa. Discover your next home
               through the power of AI.

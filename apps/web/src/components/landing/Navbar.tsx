@@ -37,7 +37,7 @@ export default function Navbar() {
       <div className="container-home">
         <nav className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a
+          <Link
             href="/"
             className="flex items-center gap-2 group focus-ring"
             aria-label={brand.name}
@@ -54,7 +54,7 @@ export default function Navbar() {
             <span className="font-semibold text-[var(--text-primary)] text-lg tracking-tight">
               {brand.name}
             </span>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <ul className="hidden md:flex items-center gap-1">
