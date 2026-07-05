@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { brand } from "@/lib/branding";
+import { dashboardPathForRole } from "@/lib/dashboard-path";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -33,19 +34,26 @@ export default function SignInPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email: form.email,
-      password: form.password,
-    });
+    const { data: signInData, error: signInError } =
+      await supabase.auth.signInWithPassword({
+        email: form.email,
+        password: form.password,
+      });
 
-    setLoading(false);
-
-    if (signInError) {
-      setError(signInError.message);
+    if (signInError || !signInData.user) {
+      setLoading(false);
+      setError(signInError?.message ?? "Unable to sign in.");
       return;
     }
 
-    router.push("/");
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", signInData.user.id)
+      .single();
+
+    setLoading(false);
+    router.push(dashboardPathForRole(profile?.role ?? "user"));
     router.refresh();
   };
 

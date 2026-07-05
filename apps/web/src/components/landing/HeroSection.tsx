@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Sparkles, ArrowRight } from "lucide-react";
+import { createClient } from "@/utils/supabase/client";
 
 const placeholders = [
   "A modern 2-bedroom apartment in East Legon...",
@@ -34,6 +36,7 @@ function AnimatedGradientBlob({
 }
 
 export default function HeroSection() {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
@@ -81,8 +84,18 @@ export default function HeroSection() {
     return () => clearTimeout(typeTimeout);
   }, [placeholderIdx]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      router.push("/signin");
+    }
+    // Signed-in search wiring lands in a later phase.
   };
 
   return (

@@ -17,10 +17,10 @@ const footerLinks = {
     { label: "Press", href: "#" },
   ],
   Agents: [
-    { label: "List a Property", href: "/signup" },
+    { label: "List a Property", href: "/agent" },
     { label: "Agent Verification", href: "#" },
-    { label: "Agent Dashboard", href: "#" },
-    { label: "Apply Now", href: "/signup" },
+    { label: "Agent Dashboard", href: "/agent/dashboard" },
+    { label: "Apply Now", href: "/agent/signup" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "#" },

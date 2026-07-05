@@ -1,13 +1,18 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { getCurrentUserRole } from "./getCurrentUserRole";
+import { dashboardPathForRole } from "@/lib/dashboard-path";
 import type { UserRole } from "@/types/auth";
 
 interface RequireRoleOptions {
   /** Where to send a request with no session at all. */
   unauthenticatedRedirect: string;
-  /** Where to send a request that IS signed in but holds the wrong role. */
-  unauthorizedRedirect: string;
+  /**
+   * Where to send a request that IS signed in but holds the wrong role.
+   * Defaults to that user's own dashboard (dashboardPathForRole) so, e.g., an
+   * agent hitting /noweadmin lands on /agent instead of a dead end.
+   */
+  unauthorizedRedirect?: string;
 }
 
 /**
@@ -35,8 +40,15 @@ export async function requireRole(
 
   const role = await getCurrentUserRole();
 
-  if (!role || !allowedRoles.includes(role)) {
-    redirect(options.unauthorizedRedirect);
+  // No resolvable profile at all (e.g. missing `profiles` row) — treat like
+  // unauthenticated rather than defaulting to "user", which would redirect
+  // to /dashboard and re-run this exact same failing check, looping forever.
+  if (!role) {
+    redirect(options.unauthenticatedRedirect);
+  }
+
+  if (!allowedRoles.includes(role)) {
+    redirect(options.unauthorizedRedirect ?? dashboardPathForRole(role));
   }
 
   return role;

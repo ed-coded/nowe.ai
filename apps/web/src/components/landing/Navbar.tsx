@@ -9,9 +9,10 @@ import { cn } from "@/lib/utils";
 import { brand } from "@/lib/branding";
 
 const navLinks = [
+  { label: "Home", href: "/" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Properties", href: "#featured" },
-  { label: "For Agents", href: "#agents" },
+  { label: "For Agents", href: "/agent" },
 ];
 
 export default function Navbar() {
@@ -58,16 +59,23 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <ul className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="px-4 py-2 rounded-lg text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] transition-all duration-200 focus-ring"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const className =
+                "px-4 py-2 rounded-lg text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] transition-all duration-200 focus-ring";
+              return (
+                <li key={link.href}>
+                  {link.href.startsWith("#") ? (
+                    <a href={link.href} className={className}>
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link href={link.href} className={className}>
+                      {link.label}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
           </ul>
 
           {/* CTA buttons */}
@@ -109,16 +117,29 @@ export default function Navbar() {
             className="md:hidden overflow-hidden glass-strong border-t border-[var(--border)]"
           >
             <div className="container-home py-4 flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="px-4 py-3 rounded-lg text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] transition-all"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const className =
+                  "px-4 py-3 rounded-lg text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] transition-all";
+                return link.href.startsWith("#") ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={className}
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={className}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
               <div className="border-t border-[var(--border)] pt-4 mt-2 flex flex-col gap-2">
                 <Link
                   href="/signin"

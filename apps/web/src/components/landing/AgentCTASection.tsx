@@ -137,7 +137,7 @@ export default function AgentCTASection() {
               </ul>
 
               <Link
-                href="/signup"
+                href="/agent"
                 className="inline-flex items-center gap-2.5 border border-[var(--border)] hover:border-[var(--accent)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-medium text-sm px-7 py-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--surface)] focus-ring"
               >
                 Apply as agent

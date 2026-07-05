@@ -53,7 +53,8 @@ export default function SignUpPage() {
     }
 
     if (data.session) {
-      router.push("/");
+      // New signups always default to role 'user' (see handle_new_user()).
+      router.push("/dashboard");
       router.refresh();
     } else {
       setCheckEmail(true);
