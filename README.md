@@ -1,6 +1,6 @@
 # 🏠 nowe.ai
 
-> **AI-powered property discovery that understands people—not just listings.**
+> **AI-powered property discovery that understands people not just listings.**
 
 ## AI for Good Hackathon
 
