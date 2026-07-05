@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { MapPin, BedDouble, Bath, ShieldCheck, Sparkles, Heart, ArrowRight } from "lucide-react";
 import { type Property } from "@/types/property";
@@ -233,13 +234,13 @@ export default function FeaturedListings() {
           transition={{ duration: 0.45, delay: 0.3 }}
           className="text-center mt-12"
         >
-          <a
-            href="#"
+          <Link
+            href="/listings"
             className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent)] hover:bg-[var(--card)] transition-all duration-300 text-sm font-medium focus-ring"
           >
             Browse all properties
             <ArrowRight size={16} />
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

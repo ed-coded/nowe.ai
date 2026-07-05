@@ -18,8 +18,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { brand } from "@/lib/branding";
-
-type AgentType = "real_estate_agent" | "landlord" | "developer";
+import type { AgentType } from "@/types/auth";
 
 const AGENT_TYPES: { value: AgentType; label: string }[] = [
   { value: "real_estate_agent", label: "Real Estate Agent" },

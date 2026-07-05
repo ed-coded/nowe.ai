@@ -119,3 +119,12 @@ export async function deleteChat(chatId: string): Promise<void> {
   const { error } = await supabase.from("chats").delete().eq("id", chatId);
   if (error) throw new Error("Failed to delete conversation");
 }
+
+/**
+ * Future-ready stub for the History page's Export action — wires up the UI
+ * now so a real implementation (e.g. a signed JSON/PDF download) can replace
+ * just this function later with no changes to the calling page.
+ */
+export async function exportChatHistory(): Promise<never> {
+  throw new Error("Export isn't available yet — coming in a future phase");
+}

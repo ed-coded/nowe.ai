@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
 import { CalendarClock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useInspectionRequestsStore } from "@/services/properties/inspectionService";
+import { Skeleton } from "@/components/ui/skeleton";
+import { listMyInspections } from "@/services/properties/inspectionService";
 
 const STATUS_VARIANT: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
   pending: "secondary",
@@ -14,7 +16,10 @@ const STATUS_VARIANT: Record<string, "default" | "secondary" | "destructive" | "
 };
 
 export default function InspectionsPage() {
-  const requests = useInspectionRequestsStore((s) => s.requests);
+  const { data: requests = [], isLoading } = useQuery({
+    queryKey: ["my-inspections"],
+    queryFn: listMyInspections,
+  });
 
   return (
     <div>
@@ -23,7 +28,13 @@ export default function InspectionsPage() {
         Track the viewings you&apos;ve requested and their status.
       </p>
 
-      {requests.length === 0 ? (
+      {isLoading ? (
+        <div className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-20 w-full rounded-2xl" />
+          ))}
+        </div>
+      ) : requests.length === 0 ? (
         <div className="glass rounded-2xl border border-[var(--border)] p-10 text-center">
           <CalendarClock size={28} className="text-[var(--text-faint)] mx-auto mb-3" />
           <p className="text-sm text-[var(--text-muted)] mb-4">
@@ -43,8 +54,10 @@ export default function InspectionsPage() {
               key={request.id}
               className="flex items-center gap-4 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4"
             >
-              <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
-                <Image src={request.propertyImageUrl} alt={request.propertyTitle} fill sizes="64px" className="object-cover" />
+              <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-[var(--surface)]">
+                {request.propertyImageUrl && (
+                  <Image src={request.propertyImageUrl} alt={request.propertyTitle} fill sizes="64px" className="object-cover" />
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <Link

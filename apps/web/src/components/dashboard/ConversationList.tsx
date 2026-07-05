@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Pin, PinOff, Pencil, Trash2, MoreHorizontal, Sparkles, Search } from "lucide-react";
+import { Pin, PinOff, Pencil, Trash2, MoreHorizontal, Sparkles, Search, History } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -218,6 +218,17 @@ export function ConversationList({ onNavigate }: ConversationListProps) {
       {filtered.length === 0 && (
         <p className="px-3 text-xs text-[var(--text-faint)]">No conversations match &quot;{query}&quot;</p>
       )}
+
+      <div className="px-1.5">
+        <Link
+          href="/dashboard/history"
+          onClick={onNavigate}
+          className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs text-[var(--text-faint)] hover:text-[var(--accent)] hover:bg-[var(--card)] transition-colors focus-ring"
+        >
+          <History size={13} />
+          View full history
+        </Link>
+      </div>
 
       {pinned.length > 0 && (
         <div>

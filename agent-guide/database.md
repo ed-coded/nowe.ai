@@ -1,5 +1,3 @@
-# HomeHub Database Design
-
 ## Database Provider
 
 Database:

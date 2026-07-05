@@ -6,7 +6,7 @@ import { brand } from "@/lib/branding";
 const footerLinks = {
   Product: [
     { label: "How It Works", href: "#how-it-works" },
-    { label: "Browse Properties", href: "#" },
+    { label: "Browse Properties", href: "/listings" },
     { label: "AI Search", href: "#" },
     { label: "Pricing", href: "#" },
   ],

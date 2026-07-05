@@ -16,6 +16,8 @@ export interface MockProperty extends Property {
   baseSafetyScore: number;
   baseCommuteMinutes: number;
   createdAt: string;
+  /** Real listings only — the owning agent's profile id, used to start a conversation. */
+  ownerId?: string;
 }
 
 export const mockProperties: MockProperty[] = [

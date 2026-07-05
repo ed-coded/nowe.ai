@@ -35,6 +35,7 @@ export interface ProfileRecord {
   email: string;
   fullName: string | null;
   phone: string | null;
+  agentType: string | null;
   preferences: ProfilePreferences;
 }
 
@@ -47,7 +48,7 @@ export async function fetchProfile(): Promise<ProfileRecord | null> {
 
   const { data, error } = await supabase
     .from("profiles")
-    .select("id, email, full_name, phone, preferences")
+    .select("id, email, full_name, phone, agent_type, preferences")
     .eq("id", user.id)
     .single();
 
@@ -58,6 +59,7 @@ export async function fetchProfile(): Promise<ProfileRecord | null> {
     email: data.email,
     fullName: data.full_name,
     phone: data.phone,
+    agentType: data.agent_type,
     preferences: { ...DEFAULT_PREFERENCES, ...(data.preferences as Partial<ProfilePreferences> | null) },
   };
 }

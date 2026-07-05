@@ -13,12 +13,13 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { useSavedPropertiesStore, savedPropertiesService } from "@/services/properties/savedPropertiesService";
-import { inspectionService } from "@/services/properties/inspectionService";
+import { requestInspection } from "@/services/properties/inspectionService";
 import type { MockProperty } from "@/services/ai/mockProperties";
 
 export function PropertyDetailActions({ property }: { property: MockProperty }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [date, setDate] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const savedIds = useSavedPropertiesStore((s) => s.savedIds);
   const isSaved = savedIds.includes(property.id);
 
@@ -27,18 +28,20 @@ export function PropertyDetailActions({ property }: { property: MockProperty }) 
     toast.success(isSaved ? "Removed from saved properties" : "Saved to your properties");
   };
 
-  const handleRequestInspection = (e: React.FormEvent) => {
+  const handleRequestInspection = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!date) return;
-    inspectionService.request({
-      propertyId: property.id,
-      propertyTitle: property.title,
-      propertyImageUrl: property.imageUrl,
-      requestedDate: date,
-    });
-    toast.success("Inspection requested — we'll notify you once it's confirmed");
-    setDialogOpen(false);
-    setDate("");
+    if (!date || submitting) return;
+    setSubmitting(true);
+    try {
+      await requestInspection({ propertyId: property.id, requestedDate: date });
+      toast.success("Inspection requested — we'll notify you once it's confirmed");
+      setDialogOpen(false);
+      setDate("");
+    } catch {
+      toast.error("Couldn't request inspection");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -75,9 +78,10 @@ export function PropertyDetailActions({ property }: { property: MockProperty }) 
               </DialogClose>
               <button
                 type="submit"
-                className="px-4 py-2.5 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-sm font-medium transition-colors focus-ring"
+                disabled={submitting}
+                className="px-4 py-2.5 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:opacity-60 text-white text-sm font-medium transition-colors focus-ring"
               >
-                Request Inspection
+                {submitting ? "Requesting..." : "Request Inspection"}
               </button>
             </DialogFooter>
           </form>

@@ -1,11 +1,20 @@
 import Link from "next/link";
-import { Sparkles, MessageSquare } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { listChatHistory } from "@/services/chat/chatService";
 import { listConversations } from "@/services/messaging/conversationService";
+import { AgentConversationsPanel } from "@/features/messaging/AgentConversationsPanel";
 
-export default async function MessagesPage() {
-  const [chatHistory, conversations] = await Promise.all([listChatHistory(), listConversations()]);
+interface MessagesPageProps {
+  searchParams: Promise<{ tab?: string }>;
+}
+
+export default async function MessagesPage({ searchParams }: MessagesPageProps) {
+  const [{ tab }, chatHistory, conversations] = await Promise.all([
+    searchParams,
+    listChatHistory(),
+    listConversations(),
+  ]);
 
   return (
     <div>
@@ -14,7 +23,7 @@ export default async function MessagesPage() {
         Conversations with the AI assistant and with agents, kept separate.
       </p>
 
-      <Tabs defaultValue="ai">
+      <Tabs defaultValue={tab === "agents" ? "agents" : "ai"}>
         <TabsList>
           <TabsTrigger value="ai">AI Assistant</TabsTrigger>
           <TabsTrigger value="agents">Agents</TabsTrigger>
@@ -54,33 +63,7 @@ export default async function MessagesPage() {
         </TabsContent>
 
         <TabsContent value="agents" className="pt-4">
-          {conversations.length === 0 ? (
-            <EmptyState
-              icon={MessageSquare}
-              message="No conversations with agents yet — message an agent from a property's detail page once available."
-            />
-          ) : (
-            <div className="space-y-2">
-              {conversations.map((conversation) => (
-                <div
-                  key={conversation.id}
-                  className="flex items-center gap-3 bg-[var(--card)] border border-[var(--border)] rounded-xl p-4"
-                >
-                  <div className="w-8 h-8 rounded-lg bg-[var(--surface)] flex items-center justify-center flex-shrink-0">
-                    <MessageSquare size={14} className="text-[var(--accent)]" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-[var(--text-primary)] truncate">{conversation.agentName}</p>
-                    {conversation.lastMessageAt && (
-                      <p className="text-xs text-[var(--text-faint)]">
-                        {new Date(conversation.lastMessageAt).toLocaleDateString()}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <AgentConversationsPanel conversations={conversations} />
         </TabsContent>
       </Tabs>
     </div>

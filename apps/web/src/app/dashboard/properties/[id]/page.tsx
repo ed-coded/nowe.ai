@@ -11,8 +11,10 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
-import { getMockPropertyById } from "@/services/ai/searchProperties";
+import { propertySearchService } from "@/services/properties/propertySearchService";
 import { PropertyDetailActions } from "@/features/ai/PropertyDetailActions";
+import { MessageAgentButton } from "@/features/messaging/MessageAgentButton";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface PropertyDetailPageProps {
   params: Promise<{ id: string }>;
@@ -20,7 +22,7 @@ interface PropertyDetailPageProps {
 
 export default async function PropertyDetailPage({ params }: PropertyDetailPageProps) {
   const { id } = await params;
-  const property = getMockPropertyById(id);
+  const property = await propertySearchService.getById(id);
 
   if (!property) notFound();
 
@@ -112,13 +114,11 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             </div>
 
             <div className="flex items-center gap-3 pb-4 border-b border-[var(--border-subtle)]">
-              <Image
-                src={property.landlordAvatar}
-                alt={property.landlordName}
-                width={36}
-                height={36}
-                className="rounded-full"
-              />
+              <Avatar className="w-9 h-9">
+                <AvatarFallback className="bg-[var(--accent)] text-white text-xs">
+                  {property.landlordName.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               <div>
                 <p className="text-sm text-[var(--text-primary)] font-medium">{property.landlordName}</p>
                 <p className="text-xs text-[var(--text-faint)]">Listing agent</p>
@@ -141,12 +141,16 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
             <PropertyDetailActions property={property} />
 
-            <a
-              href={`mailto:hello@nowe.ai?subject=Inquiry about ${encodeURIComponent(property.title)}`}
-              className="block text-center text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
-            >
-              Contact agent
-            </a>
+            {property.ownerId ? (
+              <MessageAgentButton agentId={property.ownerId} propertyId={property.id} />
+            ) : (
+              <a
+                href={`mailto:hello@nowe.ai?subject=Inquiry about ${encodeURIComponent(property.title)}`}
+                className="block text-center text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+              >
+                Contact agent
+              </a>
+            )}
           </div>
         </div>
       </div>
